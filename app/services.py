@@ -161,3 +161,14 @@ def get_payment_by_idempotency_key(
         )
         .first()
     )
+
+
+def get_payment_by_id(
+    db: Session,
+    payment_id: int,
+) -> Payment | None:
+    return (
+        db.query(Payment)
+        .filter(Payment.id == payment_id)
+        .first()
+    )

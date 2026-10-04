@@ -12,6 +12,7 @@ from app.schemas import PaymentResponse
 from app.services import create_payment_record
 from app.services import get_tariff_by_id
 from app.services import get_payment_by_idempotency_key
+from app.services import get_payment_by_id
 
 router = APIRouter(
     prefix="/payments",
@@ -75,8 +76,28 @@ def create_payment(
     )
 
 
-@router.get("/{payment_id}")
-def get_payment(payment_id: int):
-    return {
-        "payment_id": payment_id,
-    }
+@router.get(
+    "/{payment_id}",
+    response_model=PaymentResponse,
+    responses={
+        404: {
+            "description": "Payment not found",
+        },
+    },
+)
+def get_payment(
+    payment_id: int,
+    db: Session = Depends(get_db),
+):
+    payment = get_payment_by_id(
+        db=db,
+        payment_id=payment_id,
+    )
+
+    if payment is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Payment not found",
+        )
+
+    return payment
