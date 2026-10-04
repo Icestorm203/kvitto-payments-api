@@ -31,8 +31,3 @@ app = FastAPI(
 app.include_router(tariffs.router)
 app.include_router(payments.router)
 app.include_router(webhooks.router)
-
-
-@app.get("/")
-def root():
-    return {"message": "Kvitto API"}

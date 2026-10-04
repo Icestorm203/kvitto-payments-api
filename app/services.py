@@ -8,6 +8,7 @@ from fastapi import HTTPException
 from app.constants import PROMO_CODE
 from app.constants import PROMO_DISCOUNT_PERCENT
 from app.constants import VALID_INSTALLMENT_MONTHS
+from app.constants import VALID_TRANSITIONS
 
 from app.models import Payment
 from app.schemas import PaymentCreate
@@ -172,3 +173,30 @@ def get_payment_by_id(
         .filter(Payment.id == payment_id)
         .first()
     )
+
+
+def can_transition(
+    current_status: str,
+    new_status: str,
+) -> bool:
+
+    allowed = VALID_TRANSITIONS.get(
+        current_status,
+        set()
+    )
+
+    return new_status in allowed
+
+
+def update_payment_status(
+    db: Session,
+    payment: Payment,
+    new_status: str,
+):
+    payment.status = new_status
+
+    db.commit()
+
+    db.refresh(payment)
+
+    return payment

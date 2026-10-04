@@ -35,3 +35,15 @@ VALID_INSTALLMENT_MONTHS = (
     6,
     12,
 )
+
+VALID_TRANSITIONS = {
+    "pending": {
+        "succeeded",
+        "failed",
+    },
+    "succeeded": {
+        "refunded",
+    },
+    "failed": set(),
+    "refunded": set(),
+}

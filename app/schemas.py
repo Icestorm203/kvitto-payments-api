@@ -53,3 +53,14 @@ class PaymentResponse(BaseModel):
     schedule: list[int] | None
     email: str
     created_at: datetime
+
+
+class BankWebhook(BaseModel):
+    payment_id: int
+
+    status: Literal[
+        "pending",
+        "succeeded",
+        "failed",
+        "refunded",
+    ]
