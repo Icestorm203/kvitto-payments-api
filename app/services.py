@@ -1,17 +1,19 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.constants import TARIFFS
-from app.models import Tariff
-
-from fastapi import HTTPException
-
-from app.constants import PROMO_CODE
-from app.constants import PROMO_DISCOUNT_PERCENT
-from app.constants import VALID_INSTALLMENT_MONTHS
-from app.constants import VALID_TRANSITIONS
-
-from app.models import Payment
+from app.constants import (
+    PROMO_CODE,
+    PROMO_DISCOUNT_PERCENT,
+    TARIFFS,
+    VALID_INSTALLMENT_MONTHS,
+    VALID_TRANSITIONS,
+)
+from app.models import (
+    Payment,
+    Tariff,
+)
 from app.schemas import PaymentCreate
+
 
 def seed_tariffs(db: Session):
     existing_count = db.query(Tariff).count()
@@ -84,17 +86,6 @@ def calculate_schedule(
         schedule.append(payment)
 
     return schedule
-
-
-def get_tariff_by_id(
-    db: Session,
-    tariff_id: int,
-):
-    return (
-        db.query(Tariff)
-        .filter(Tariff.id == tariff_id)
-        .first()
-    )
 
 
 def get_tariff_by_id(

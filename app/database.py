@@ -2,8 +2,10 @@ import os
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import (
+    declarative_base,
+    sessionmaker,
+)
 
 load_dotenv()
 
@@ -43,6 +45,5 @@ def get_db():
 
 
 def create_db():
-    from app.models import Payment, Tariff
 
     Base.metadata.create_all(bind=engine)

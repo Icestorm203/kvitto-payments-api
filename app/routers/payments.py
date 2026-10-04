@@ -1,18 +1,24 @@
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import HTTPException
-from fastapi import status
-from fastapi import Header
-from fastapi import Response
+from fastapi import (
+    APIRouter,
+    Depends,
+    Header,
+    HTTPException,
+    Response,
+    status,
+)
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas import PaymentCreate
-from app.schemas import PaymentResponse
-from app.services import create_payment_record
-from app.services import get_tariff_by_id
-from app.services import get_payment_by_idempotency_key
-from app.services import get_payment_by_id
+from app.schemas import (
+    PaymentCreate,
+    PaymentResponse,
+)
+from app.services import (
+    create_payment_record,
+    get_payment_by_id,
+    get_payment_by_idempotency_key,
+    get_tariff_by_id,
+)
 
 router = APIRouter(
     prefix="/payments",

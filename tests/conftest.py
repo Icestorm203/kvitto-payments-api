@@ -6,15 +6,18 @@ from dotenv import load_dotenv
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import (
+    Session,
+    sessionmaker,
+)
 
 from app.constants import TARIFFS
-from app.database import Base
-from app.database import get_db
+from app.database import (
+    Base,
+    get_db,
+)
 from app.main import app
 from app.models import Tariff
-
 
 load_dotenv()
 

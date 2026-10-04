@@ -1,10 +1,12 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel
-from pydantic import ConfigDict
-from pydantic import EmailStr
-from pydantic import model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    model_validator,
+)
 
 
 class TariffResponse(BaseModel):
