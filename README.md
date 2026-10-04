@@ -1,6 +1,6 @@
 # Kvitto Payments API
 
-[![CI](https://github.com/Icestorm203/kvitto-payments-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Icestorm203/kvitto-payi/actions/workflows/ci.yml)
+[![CI](https://github.com/Icestorm203/kvitto-payments-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Icestorm203/kvitto-payments-api/actions/workflows/ci.yml)
 
 FastAPI-сервис для создания платежей, управления тарифами и обработки банковских вебхуков. Проект хранит данные в PostgreSQL и поддерживает промокоды, рассрочку и идемпотентность запросов.
 
