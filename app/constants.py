@@ -25,3 +25,13 @@ VALID_STATUSES = (
     "failed",
     "refunded"
 )
+
+PROMO_CODE = "KVITTO10"
+
+PROMO_DISCOUNT_PERCENT = 10
+
+VALID_INSTALLMENT_MONTHS = (
+    3,
+    6,
+    12,
+)
