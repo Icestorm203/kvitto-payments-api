@@ -1,4 +1,10 @@
 from fastapi import APIRouter
+from fastapi import Depends
+
+from sqlalchemy.orm import Session
+
+from app.database import get_db
+from app.models import Tariff
 
 router = APIRouter(
     prefix="/tariffs",
@@ -7,5 +13,7 @@ router = APIRouter(
 
 
 @router.get("")
-def get_tariffs():
-    return []
+def get_tariffs(
+    db: Session = Depends(get_db)
+):
+    return db.query(Tariff).all()
