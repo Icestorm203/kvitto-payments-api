@@ -111,6 +111,7 @@ def create_payment_record(
     db: Session,
     payload: PaymentCreate,
     tariff: Tariff,
+    idempotency_key: str | None,
 ) -> Payment:
     discount, final_amount = calculate_discount(
         amount=tariff.price,
@@ -134,6 +135,7 @@ def create_payment_record(
         status="pending",
         installment_months=payload.installment_months,
         schedule=schedule,
+        idempotency_key=idempotency_key,
     )
 
     db.add(payment)
@@ -146,3 +148,16 @@ def create_payment_record(
         raise
 
     return payment
+
+
+def get_payment_by_idempotency_key(
+    db: Session,
+    idempotency_key: str,
+) -> Payment | None:
+    return (
+        db.query(Payment)
+        .filter(
+            Payment.idempotency_key == idempotency_key
+        )
+        .first()
+    )
