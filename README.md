@@ -14,7 +14,7 @@ FastAPI-сервис для создания платежей, управлен�
 - Обработка банковских вебхуков
 - PostgreSQL + SQLAlchemy ORM
 - Docker Compose
-- 30 интеграционных тестов
+- 32 интеграционных теста
 - Ruff и GitHub Actions CI
 
 ## Endpoints
@@ -23,6 +23,7 @@ FastAPI-сервис для создания платежей, управлен�
 |---------|---------|---------|
 | GET | /tariffs | Получить список тарифов |
 | POST | /payments | Создать платеж |
+| GET | /payments | Получить список платежей с фильтрами |
 | GET | /payments/{payment_id} | Получить платеж по ID |
 | POST | /webhooks/bank | Изменить статус платежа через вебхук |
 
@@ -240,6 +241,17 @@ Idempotency-Key: some-unique-key
 
 Если тот же ключ отправлен повторно, API вернет уже созданный платеж с кодом `200 OK` вместо создания новой записи.
 
+### Получить список платежей
+
+Поддерживаются фильтры по email и статусу платежа.
+
+```http
+GET /payments
+GET /payments?email=user@example.com
+GET /payments?status=pending
+GET /payments?email=user@example.com&status=pending
+```
+
 ### Получить платеж по ID
 
 ```http
@@ -330,7 +342,7 @@ pytest
 docker compose exec api pytest
 ```
 
-Проект содержит 30 интеграционных тестов (Pytest).
+Проект содержит 32 интеграционных теста (Pytest).
 
 Покрытые сценарии:
 

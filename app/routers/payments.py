@@ -17,6 +17,7 @@ from app.services import (
     create_payment_record,
     get_payment_by_id,
     get_payment_by_idempotency_key,
+    get_payments,
     get_tariff_by_id,
 )
 
@@ -107,3 +108,19 @@ def get_payment(
         )
 
     return payment
+
+
+@router.get(
+    "",
+    response_model=list[PaymentResponse],
+)
+def list_payments(
+    email: str | None = None,
+    status: str | None = None,
+    db: Session = Depends(get_db),
+):
+    return get_payments(
+        db=db,
+        email=email,
+        status=status,
+    )

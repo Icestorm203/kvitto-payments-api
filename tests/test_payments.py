@@ -338,3 +338,64 @@ def test_get_unknown_payment_returns_404(client):
     assert response.json() == {
         "detail": "Payment not found",
     }
+
+
+def test_get_payments_by_email(client):
+    client.post(
+        "/payments",
+        json={
+            "tariff_id": 1,
+            "email": "first@test.com",
+            "method": "card",
+        },
+    )
+
+    client.post(
+        "/payments",
+        json={
+            "tariff_id": 1,
+            "email": "second@test.com",
+            "method": "card",
+        },
+    )
+
+    response = client.get(
+        "/payments?email=first@test.com"
+    )
+
+    assert response.status_code == 200
+
+    payments = response.json()
+
+    assert len(payments) == 1
+    assert payments[0]["email"] == "first@test.com"
+
+
+def test_get_payments_by_status(client):
+    payment = client.post(
+        "/payments",
+        json={
+            "tariff_id": 1,
+            "email": "test@test.com",
+            "method": "card",
+        },
+    ).json()
+
+    client.post(
+        "/webhooks/bank",
+        json={
+            "payment_id": payment["id"],
+            "status": "succeeded",
+        },
+    )
+
+    response = client.get(
+        "/payments?status=succeeded"
+    )
+
+    assert response.status_code == 200
+
+    payments = response.json()
+
+    assert len(payments) == 1
+    assert payments[0]["status"] == "succeeded"

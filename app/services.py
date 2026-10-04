@@ -191,3 +191,23 @@ def update_payment_status(
     db.refresh(payment)
 
     return payment
+
+
+def get_payments(
+    db: Session,
+    email: str | None = None,
+    status: str | None = None,
+):
+    query = db.query(Payment)
+
+    if email:
+        query = query.filter(
+            Payment.email == email
+        )
+
+    if status:
+        query = query.filter(
+            Payment.status == status
+        )
+
+    return query.all()
